@@ -6,21 +6,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Unzip and Fix Folder Layout
+      - name: Unzip Project Files
         run: |
           if [ -f TotemHoverReady.zip ]; then
             unzip -o TotemHoverReady.zip -d .
-            # If the zip created a subfolder, move everything out into the root
-            if [ -d TotemHover ]; then
-              mv TotemHover/* . 2>/dev/null || true
-              mv TotemHover/.* . 2>/dev/null || true
-            elif [ -d totemhovermod ]; then
-              mv totemhovermod/* . 2>/dev/null || true
-              mv totemhovermod/.* . 2>/dev/null || true
-            elif [ -d TotemHoverMod ]; then
-              mv TotemHoverMod/* . 2>/dev/null || true
-              mv TotemHoverMod/.* . 2>/dev/null || true
-            fi
           fi
 
       - name: Set up JDK 21
@@ -36,6 +25,7 @@ jobs:
 
       - name: Run Build Command
         run: gradle build
+        working-directory: ./TotemHoverMod
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
