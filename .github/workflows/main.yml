@@ -18,11 +18,13 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build with Gradle Natively
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.10.2'
-          arguments: build
+
+      - name: Run Build Command
+        run: gradle build
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
